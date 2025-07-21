@@ -7,9 +7,22 @@ A pure NumPy implementation of a Recurrent Neural Network (RNN) for character-le
 This project implements a vanilla RNN from scratch using only NumPy, featuring:
 - ⚡ Forward propagation through time
 - 🔄 Backward propagation through time (BPTT) 
+- 📚 Theoretical Materials
 - 📝 Character-level text generation
 - 🎯 Training on sequential patterns
 - 🛡️ Gradient clipping to prevent exploding gradients
+
+## 📚 Theoretical Materials
+
+For a comprehensive understanding of RNN theory and mathematical derivations, refer to:
+
+- **[RNN.pdf](materials/RNN.pdf)**: Complete theoretical foundation including:
+  - Detailed forward propagation equations and demonstrations
+  - Step-by-step backward propagation through time (BPTT) derivations
+  - Mathematical proofs and explanations
+  - Visual demonstrations of RNN computations
+
+This PDF provides in-depth coverage of the mathematical concepts implemented in this project.
 
 ## 📁 Project Structure
 
@@ -19,6 +32,10 @@ RNN-Scratch/
 │   ├── __init__.py
 │   ├── rnn.py              # Core RNN implementation
 │   └── character_rnn.py    # Character-level RNN wrapper
+├── materials/
+│   └── RNN.pdf             # Theoretical foundation and equations
+├── images/
+│   └── loss.png            # Training loss visualization
 ├── main.py                 # Demo script
 └── README.md
 ```
