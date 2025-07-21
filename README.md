@@ -27,25 +27,29 @@ RNN-Scratch/
 
 ### Forward Propagation
 
-The RNN forward pass computes the following equations at each time step \(t\):
+The RNN forward pass computes the following equations at each time step $t$:
 
 1. **Pre-activation of hidden state:**
-   $$h^{<t>} = W_{xh} \cdot x^{<t>} + W_{ah} \cdot a^{<t-1>} + b_h$$
+
+   $$h^{(t)} = W_{xh} \cdot x^{(t)} + W_{ah} \cdot a^{(t-1)} + b_h$$
 
 2. **Hidden state activation:**
-   $$a^{<t>} = \tanh(h^{<t>})$$
+
+   $$a^{(t)} = \tanh(h^{(t)})$$
 
 3. **Output pre-activation:**
-   $$o^{<t>} = W_{ao} \cdot a^{<t>} + b_o$$
+
+   $$o^{(t)} = W_{ao} \cdot a^{(t)} + b_o$$
 
 4. **Output probabilities:**
-   $$\hat{y}^{<t>} = \text{softmax}(o^{<t>})$$
+
+   $$\hat{y}^{(t)} = \text{softmax}(o^{(t)})$$
 
 where:
-- $x^{<t>}$ is the input at time $t$
-- $o^{<t>}$ is non-normalized output at time $t$
-- $a^{<t>}$ is the activation at time $t$
-- $h^{<t>}$ is the hidden state at time $t$
+- $x^{(t)}$ is the input at time $t$
+- $o^{(t)}$ is non-normalized output at time $t$
+- $a^{(t)}$ is the activation at time $t$
+- $h^{(t)}$ is the hidden state at time $t$
 - $W_{xh}, W_{ah}, W_{ao}$ are weight matrices
 - $b_h, b_o$ are bias vectors
 
@@ -54,34 +58,42 @@ where:
 The gradients are computed by backpropagating through time:
 
 1. **Output gradient:**
-   $$\frac{\partial L^{<t>}}{\partial o^{<t>}} = \hat{y}^{<t>} - y^{<t>}$$
+
+   $$\frac{\partial L^{(t)}}{\partial o^{(t)}} = \hat{y}^{(t)} - y^{(t)}$$
 
 2. **Hidden state gradient:**
-   $$\frac{\partial L^{<t>}}{\partial a^{<t>}} = W_{ao}^T \cdot \frac{\partial L^{<t>}}{\partial o^{<t>}} + W_{ah}^T \cdot \frac{\partial L^{<t>}}{\partial h^{<t+1>}}$$
-   $$\frac{\partial L^{<t>}}{\partial h^{<t+1>}}=\frac{\partial L^{<t+1>}}{\partial h^{<t+1>}}$$
+
+   $$\frac{\partial L^{(t)}}{\partial a^{(t)}} = W_{ao}^T \cdot \frac{\partial L^{(t)}}{\partial o^{(t)}} + W_{ah}^T \cdot \frac{\partial L^{(t)}}{\partial h^{(t+1)}}$$
+   
+   $$\frac{\partial L^{(t)}}{\partial h^{(t+1)}}=\frac{\partial L^{(t+1)}}{\partial h^{(t+1)}}$$
 
 3. **Pre-activation gradient:**
-   $$\frac{\partial L^{<t>}}{\partial h^{<t>}} = \frac{\partial L^{<t>}}{\partial a^{<t>}} \cdot (1 - (a^{<t>})^2)$$
+
+   $$\frac{\partial L^{(t)}}{\partial h^{(t)}} = \frac{\partial L^{(t)}}{\partial a^{(t)}} \cdot (1 - (a^{(t)})^2)$$
 
 4. **Weight gradients (accumulated across time):**
-   $$\frac{\partial L}{\partial W_{ao}} = \sum_{t=1}^{T} \frac{\partial L^{<t>}}{\partial o^{<t>}} \cdot (a^{<t>})^T$$
+
+   $$\frac{\partial L}{\partial W_{ao}} = \sum_{t=1}^{T} \frac{\partial L^{(t)}}{\partial o^{(t)}} \cdot (a^{(t)})^T$$
    
-   $$\frac{\partial L}{\partial W_{ah}} = \sum_{t=1}^{T} \frac{\partial L^{<t>}}{\partial h^{<t>}} \cdot (a^{<t-1>})^T$$
+   $$\frac{\partial L}{\partial W_{ah}} = \sum_{t=1}^{T} \frac{\partial L^{(t)}}{\partial h^{(t)}} \cdot (a^{(t-1)})^T$$
    
-   $$\frac{\partial L}{\partial W_{xh}} = \sum_{t=1}^{T} \frac{\partial L^{<t>}}{\partial h^{<t>}} \cdot (x^{<t>})^T$$
+   $$\frac{\partial L}{\partial W_{xh}} = \sum_{t=1}^{T} \frac{\partial L^{(t)}}{\partial h^{(t)}} \cdot (x^{(t)})^T$$
 
 5. **Bias gradients:**
-   $$\frac{\partial L}{\partial b_o} = \sum_{t=1}^{T} \frac{\partial L^{<t>}}{\partial o^{<t>}}$$
+
+   $$\frac{\partial L}{\partial b_o} = \sum_{t=1}^{T} \frac{\partial L^{(t)}}{\partial o^{(t)}}$$
    
-   $$\frac{\partial L}{\partial b_h} = \sum_{t=1}^{T} \frac{\partial L^{<t>}}{\partial h^{<t>}}$$
+   $$\frac{\partial L}{\partial b_h} = \sum_{t=1}^{T} \frac{\partial L^{(t)}}{\partial h^{(t)}}$$
 
 ### Loss Function
 
 The model uses cross-entropy loss:
-$$L^{<t>} = -\sum_{i} y_i^{<t>} \log(\hat{y}_i^{<t>})$$
+
+$$L^{(t)} = -\sum_{i} y_i^{(t)} \log(\hat{y}_i^{(t)})$$
 
 Total loss across the sequence:
-$$L = \sum_{t=1}^{T} L^{<t>}$$
+
+$$L = \sum_{t=1}^{T} L^{(t)}$$
 
 ## Installation
 
