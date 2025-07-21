@@ -19,14 +19,14 @@ def main():
     # Plot training losses
     plt.figure(figsize=(12, 4))
     
-    plt.subplot(1, 3, 1)
+    plt.subplot(1, 2, 1)
     plt.plot(losses1)
     plt.title("'hello world' Training Loss")
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.grid(True)
     
-    plt.subplot(1, 3, 2)
+    plt.subplot(1, 2, 2)
     plt.plot(losses2)
     plt.title("'abcdefg' Training Loss")
     plt.xlabel("Epoch")

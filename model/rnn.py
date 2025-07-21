@@ -121,7 +121,7 @@ class RNN:
             # ∂L^<t>/∂o^<t>
             dL_do_t = dL_do_sequence[t] 
             
-            # Equation (c): ∂L^<t>/∂a^<t> = W_ao^T · ∂L^<t>/∂o^<t> + W_ah^T · ∂L^<t+1>/∂h^<t+1>
+            # Equation (c): ∂L^<t>/∂a^<t> = W_ao^T · ∂L^<t>/∂o^<t> + W_ah^T · ∂L^<t>/∂h^<t+1>
             dL_da_t = self.W_ao.T @ dL_do_t + self.W_ah.T @ dL_da_next
             
             # Equation (d): ∂L^<t>/∂h^<t> = ∂L^<t>/∂a^<t> · (1 - (a^<t>)²)
@@ -209,7 +209,7 @@ class RNN:
             loss += self.loss(y_hat_sequence[t], y_sequence[t])
         return loss
     
-    def output_error(self, y_sequence: List[np.ndarray], y_hat_sequence: List[np.ndarray]) -> List[np.ndarray]:
+    def compute_output_error(self, y_sequence: List[np.ndarray], y_hat_sequence: List[np.ndarray]) -> List[np.ndarray]:
         """ 
         Compute output error (∂L^<t>/∂o^<t>)
         
@@ -240,8 +240,8 @@ class RNN:
         # Compute loss
         loss = self.total_loss(y_hat_sequence, y_sequence)
         
-        # Compute gradients of loss with respect to output
-        dL_do_sequence = self.output_error(y_sequence, y_hat_sequence)
+        # Compute deltas of loss with respect to output ∂L^<t>/∂o^<t>
+        dL_do_sequence = self.compute_output_error(y_sequence, y_hat_sequence)
         
         # Backward pass
         gradients = self.backward(y_sequence, dL_do_sequence, cache)
