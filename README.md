@@ -1,17 +1,17 @@
-# RNN From Scratch
+# 🧠 RNN From Scratch
 
-A pure NumPy implementation of a Recurrent Neural Network (RNN) for character-level text generation and sequence learning.
+A pure NumPy implementation of a Recurrent Neural Network (RNN) for character-level text generation and sequence learning. 🚀
 
-## Overview
+## 📋 Overview
 
 This project implements a vanilla RNN from scratch using only NumPy, featuring:
-- Forward propagation through time
-- Backward propagation through time (BPTT) 
-- Character-level text generation
-- Training on sequential patterns
-- Gradient clipping to prevent exploding gradients
+- ⚡ Forward propagation through time
+- 🔄 Backward propagation through time (BPTT) 
+- 📝 Character-level text generation
+- 🎯 Training on sequential patterns
+- 🛡️ Gradient clipping to prevent exploding gradients
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 RNN-Scratch/
@@ -23,9 +23,9 @@ RNN-Scratch/
 └── README.md
 ```
 
-## Mathematical Foundation
+## 🔢 Mathematical Foundation
 
-### Forward Propagation
+### ➡️ Forward Propagation
 
 The RNN forward pass computes the following equations at each time step \(t\):
 
@@ -57,7 +57,7 @@ where:
 - $W_{xh}, W_{ah}, W_{ao}$ are weight matrices
 - $b_h, b_o$ are bias vectors
 
-### Backward Propagation Through Time (BPTT)
+### ⬅️ Backward Propagation Through Time (BPTT)
 
 The gradients are computed by backpropagating through time:
 
@@ -68,7 +68,10 @@ The gradients are computed by backpropagating through time:
 
 2. **Hidden state gradient:**
    ```math
-   \frac{\partial L^{\langle t \rangle}}{\partial a^{\langle t \rangle}} = W_{ao}^T \cdot \frac{\partial L^{\langle t \rangle}}{\partial o^{\langle t \rangle}} + W_{ah}^T \cdot \frac{\partial L^{\langle t+1 \rangle}}{\partial h^{\langle t+1 \rangle}}
+   \frac{\partial L^{\langle t \rangle}}{\partial a^{\langle t \rangle}} = W_{ao}^T \cdot \frac{\partial L^{\langle t \rangle}}{\partial o^{\langle t \rangle}} + W_{ah}^T \cdot \frac{\partial L^{\langle t \rangle}}{\partial h^{\langle t+1 \rangle}}
+   ```
+   ```math
+   \frac{\partial L^{\langle t \rangle}}{\partial h^{\langle t+1 \rangle}}=\frac{\partial L^{\langle t+1 \rangle}}{\partial h^{\langle t+1 \rangle}}
    ```
 
 3. **Pre-activation gradient:**
@@ -95,7 +98,7 @@ The gradients are computed by backpropagating through time:
    \frac{\partial L}{\partial b_h} = \sum_{t=1}^{T} \frac{\partial L^{\langle t \rangle}}{\partial h^{\langle t \rangle}}
    ```
 
-### Loss Function
+### 📊 Loss Function
 
 The model uses cross-entropy loss:
 ```math
@@ -107,7 +110,7 @@ Total loss across the sequence:
 L = \sum_{t=1}^{T} L^{\langle t \rangle}
 ```
 
-## Installation
+## 📦 Installation
 
 1. Clone the repository:
 ```bash
@@ -120,9 +123,9 @@ cd RNN-Scratch
 pip install numpy matplotlib
 ```
 
-## Usage
+## 🚀 Usage
 
-### Basic Training
+### 🏋️ Basic Training
 
 ```python
 from model import CharacterRNN
@@ -139,7 +142,7 @@ generated_text = char_rnn.generate_text('h', 50)
 print(generated_text)
 ```
 
-### Running the Demo
+### 🎮 Running the Demo
 
 ```bash
 python main.py
@@ -150,22 +153,22 @@ This will:
 2. Display training progress and loss curves
 3. Generate text samples from trained models
 
-## Training Results
+## 📈 Training Results
 
 The RNN successfully learns to generate repeating patterns:
 
 ![Training Loss](images/loss.png)
 
-### Example 1: Learning "hello world"
-- **Initial (Epoch 0)**: Random gibberish
-- **Epoch 100**: Partial patterns with errors
-- **Epoch 300+**: Perfect replication of "hello world" pattern
+### 🌍 Example 1: Learning "hello world"
+- **Initial (Epoch 0)**: Random gibberish 🎲
+- **Epoch 100**: Partial patterns with errors 🔧
+- **Epoch 300+**: Perfect replication of "hello world" pattern ✅
 
-### Example 2: Learning "abcdefg"
-- Faster convergence due to simpler alphabetical pattern
-- Perfect generation achieved by epoch 100
+### 🔤 Example 2: Learning "abcdefg"
+- Faster convergence due to simpler alphabetical pattern ⚡
+- Perfect generation achieved by epoch 100 🎯
 
-## Architecture Details
+## 🏗️ Architecture Details
 
 - **Input Size**: 27 (alphabet + space)
 - **Hidden Size**: Configurable (default: 16)
@@ -173,7 +176,7 @@ The RNN successfully learns to generate repeating patterns:
 - **Activation**: Tanh for hidden states, Softmax for outputs
 - **Optimization**: SGD with gradient clipping ([-5, 5])
 
-## Key Features
+## ✨ Key Features
 
 - **Pure NumPy Implementation**: No deep learning frameworks required
 - **Gradient Clipping**: Prevents exploding gradient problem
@@ -181,16 +184,17 @@ The RNN successfully learns to generate repeating patterns:
 - **Text Generation**: Sample from learned probability distributions
 - **Visualization**: Training loss plots for monitoring convergence
 
-## Limitations
+## ⚠️ Limitations
 
 - **Vanishing Gradients**: Limited ability to capture long-term dependencies
 - **Sequential Processing**: Cannot be parallelized like modern architectures
 - **Simple Architecture**: No gating mechanisms (vs. LSTM/GRU)
 
-## License
+
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request. 🎉
