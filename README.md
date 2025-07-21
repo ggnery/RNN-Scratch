@@ -31,29 +31,29 @@ The RNN forward pass computes the following equations at each time step \(t\):
 
 1. **Pre-activation of hidden state:**
    ```math
-   h^{<t>} = W_{xh} \cdot x^{<t>} + W_{ah} \cdot a^{<t-1>} + b_h
+   h^{\langle t \rangle} = W_{xh} \cdot x^{\langle t \rangle} + W_{ah} \cdot a^{\langle t-1 \rangle} + b_h
    ```
 
 2. **Hidden state activation:**
    ```math
-   a^{<t>} = \tanh(h^{<t>})
+   a^{\langle t \rangle} = \tanh(h^{\langle t \rangle})
    ```
 
 3. **Output pre-activation:**
    ```math
-   o^{<t>} = W_{ao} \cdot a^{<t>} + b_o
+   o^{\langle t \rangle} = W_{ao} \cdot a^{\langle t \rangle} + b_o
    ```
 
 4. **Output probabilities:**
    ```math
-   \hat{y}^{<t>} = \text{softmax}(o^{<t>})
+   \hat{y}^{\langle t \rangle} = \text{softmax}(o^{\langle t \rangle})
    ```
 
 where:
-- \(x^{<t>}\) is the input at time \(t\)
-- \(o^{<t>}\) is non-normalized output at time \(t\)
-- \(a^{<t>}\) is the activation at time \(t\)
-- \(h^{<t>}\) is the hidden state at time \(t\)
+- \(x^{\langle t \rangle}\) is the input at time \(t\)
+- \(o^{\langle t \rangle}\) is non-normalized output at time \(t\)
+- \(a^{\langle t \rangle}\) is the activation at time \(t\)
+- \(h^{\langle t \rangle}\) is the hidden state at time \(t\)
 - \(W_{xh}, W_{ah}, W_{ao}\) are weight matrices
 - \(b_h, b_o\) are bias vectors
 
@@ -63,48 +63,48 @@ The gradients are computed by backpropagating through time:
 
 1. **Output gradient:**
    ```math
-   \frac{\partial L^{<t>}}{\partial o^{<t>}} = \hat{y}^{<t>} - y^{<t>}
+   \frac{\partial L^{\langle t \rangle}}{\partial o^{\langle t \rangle}} = \hat{y}^{\langle t \rangle} - y^{\langle t \rangle}
    ```
 
 2. **Hidden state gradient:**
    ```math
-   \frac{\partial L^{<t>}}{\partial a^{<t>}} = W_{ao}^T \cdot \frac{\partial L^{<t>}}{\partial o^{<t>}} + W_{ah}^T \cdot \frac{\partial L^{<t+1>}}{\partial h^{<t+1>}}
+   \frac{\partial L^{\langle t \rangle}}{\partial a^{\langle t \rangle}} = W_{ao}^T \cdot \frac{\partial L^{\langle t \rangle}}{\partial o^{\langle t \rangle}} + W_{ah}^T \cdot \frac{\partial L^{\langle t+1 \rangle}}{\partial h^{\langle t+1 \rangle}}
    ```
 
 3. **Pre-activation gradient:**
    ```math
-   \frac{\partial L^{<t>}}{\partial h^{<t>}} = \frac{\partial L^{<t>}}{\partial a^{<t>}} \cdot (1 - (a^{<t>})^2)
+   \frac{\partial L^{\langle t \rangle}}{\partial h^{\langle t \rangle}} = \frac{\partial L^{\langle t \rangle}}{\partial a^{\langle t \rangle}} \cdot (1 - (a^{\langle t \rangle})^2)
    ```
 
 4. **Weight gradients (accumulated across time):**
    ```math
-   \frac{\partial L}{\partial W_{ao}} = \sum_{t=1}^{T} \frac{\partial L^{<t>}}{\partial o^{<t>}} \cdot (a^{<t>})^T
+   \frac{\partial L}{\partial W_{ao}} = \sum_{t=1}^{T} \frac{\partial L^{\langle t \rangle}}{\partial o^{\langle t \rangle}} \cdot (a^{\langle t \rangle})^T
    ```
    ```math
-   \frac{\partial L}{\partial W_{ah}} = \sum_{t=1}^{T} \frac{\partial L^{<t>}}{\partial h^{<t>}} \cdot (a^{<t-1>})^T
+   \frac{\partial L}{\partial W_{ah}} = \sum_{t=1}^{T} \frac{\partial L^{\langle t \rangle}}{\partial h^{\langle t \rangle}} \cdot (a^{\langle t-1 \rangle})^T
    ```
    ```math
-   \frac{\partial L}{\partial W_{xh}} = \sum_{t=1}^{T} \frac{\partial L^{<t>}}{\partial h^{<t>}} \cdot (x^{<t>})^T
+   \frac{\partial L}{\partial W_{xh}} = \sum_{t=1}^{T} \frac{\partial L^{\langle t \rangle}}{\partial h^{\langle t \rangle}} \cdot (x^{\langle t \rangle})^T
    ```
 
 5. **Bias gradients:**
    ```math
-   \frac{\partial L}{\partial b_o} = \sum_{t=1}^{T} \frac{\partial L^{<t>}}{\partial o^{<t>}}
+   \frac{\partial L}{\partial b_o} = \sum_{t=1}^{T} \frac{\partial L^{\langle t \rangle}}{\partial o^{\langle t \rangle}}
    ```
    ```math
-   \frac{\partial L}{\partial b_h} = \sum_{t=1}^{T} \frac{\partial L^{<t>}}{\partial h^{<t>}}
+   \frac{\partial L}{\partial b_h} = \sum_{t=1}^{T} \frac{\partial L^{\langle t \rangle}}{\partial h^{\langle t \rangle}}
    ```
 
 ### Loss Function
 
 The model uses cross-entropy loss:
 ```math
-L^{<t>} = -\sum_{i} y_i^{<t>} \log(\hat{y}_i^{<t>})
+L^{\langle t \rangle} = -\sum_{i} y_i^{\langle t \rangle} \log(\hat{y}_i^{\langle t \rangle})
 ```
 
 Total loss across the sequence:
 ```math
-L = \sum_{t=1}^{T} L^{<t>}
+L = \sum_{t=1}^{T} L^{\langle t \rangle}
 ```
 
 ## Installation
