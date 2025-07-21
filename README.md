@@ -50,12 +50,12 @@ The RNN forward pass computes the following equations at each time step \(t\):
    ```
 
 where:
-- \(x^{\langle t \rangle}\) is the input at time \(t\)
-- \(o^{\langle t \rangle}\) is non-normalized output at time \(t\)
-- \(a^{\langle t \rangle}\) is the activation at time \(t\)
-- \(h^{\langle t \rangle}\) is the hidden state at time \(t\)
-- \(W_{xh}, W_{ah}, W_{ao}\) are weight matrices
-- \(b_h, b_o\) are bias vectors
+- $x^{\langle t \rangle}$ is the input at time $t$
+- $o^{\langle t \rangle}$ is non-normalized output at time $t$
+- $a^{\langle t \rangle}$ is the activation at time $t$
+- $h^{\langle t \rangle}$ is the hidden state at time $t$
+- $W_{xh}, W_{ah}, W_{ao}$ are weight matrices
+- $b_h, b_o$ are bias vectors
 
 ### Backward Propagation Through Time (BPTT)
 
